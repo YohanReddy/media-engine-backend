@@ -18,10 +18,14 @@ class ImageGenerationPayload(BaseModel):
 
 latest_webhook_response = None
 
+origins = [
+    "https://media-engine.vercel.app",
+]
+
 # Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers

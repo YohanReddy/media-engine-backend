@@ -16,6 +16,10 @@ class ImageGenerationPayload(BaseModel):
     callback: str
     workflow_input: dict
 
+class VideoGenerationPayload(BaseModel):
+    callback: str
+    workflow_input: dict
+
 latest_webhook_response = None
 
 # Configure CORS middleware
@@ -44,6 +48,22 @@ async def generate_image(payload: ImageGenerationPayload):
             return response.json()
     except httpx.HTTPStatusError as e:
         raise HTTPException(status_code=e.response.status_code, detail=e.response.text)
+    
+
+@app.post("/video-generation", response_model=dict)
+async def generate_video(payload: VideoGenerationPayload):
+    url = "https://salt-api-prod.getsalt.ai/api/v1/deployments/402a0423-e8d0-4eee-9022-0b12444c4400/executions/"
+    headers = {
+        "Content-Type": "application/json",
+    }
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload.dict(), headers=headers)
+            response.raise_for_status()
+            return response.json()
+    except httpx.HTTPStatusError as e:
+        raise HTTPException(status_code=e.response.status_code, detail=e.response.text)
+
 
 @app.post("/webhook")
 async def receive_webhook(request: Request):

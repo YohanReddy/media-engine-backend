@@ -52,7 +52,7 @@ async def generate_image(payload: ImageGenerationPayload):
 
 @app.post("/video-generation", response_model=dict)
 async def generate_video(payload: VideoGenerationPayload):
-    url = "https://salt-api-prod.getsalt.ai/api/v1/deployments/e89ab684-d18e-4479-b2aa-9a2ee654cc92/executions/"
+    url = "https://salt-api-prod.getsalt.ai/api/v1/deployments/7de5c713-7b5d-4596-8187-7ffc0d71d9bf/executions/"
     headers = {
         "Content-Type": "application/json",
     }
